@@ -1,0 +1,47 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+header{
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ededed; 
+    padding: 1rem;
+}
+header nav ul{
+    display: flex;
+    gap: 2rem;
+    list-style-type: none;
+}
+header nav ul li a{
+    text-decoration: none;
+    color: black;
+}
+main{
+    height: 85vh;
+    background-color:gray;
+    overflow:scroll;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+footer{
+    height: 5vh;
+    text-align: center;
+    background-color: #ededed;
+}
+.categoriasProductos{
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    padding: 0.5rem;
+}
+.cardProducto{
+    margin: 0.5rem;
+    width: 18rem
+}
