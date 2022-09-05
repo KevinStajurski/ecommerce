@@ -1,5 +1,27 @@
 //Arreglos
 const carrito = JSON.parse(localStorage.getItem("carrito")) ?? []//Consulta del carrito en el local storage, si no existe lo crea vacio
+//Funcion que muestra un cartel emergente indicando que el producto se agrego al carrito
+function cartelAgregadoAlCarrito() {
+    Toastify({
+        text: "Producto agregado",
+        duration: 3000,
+        close: true,
+        gravity: "bottom", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "linear-gradient(to right, black, gray)",
+        },
+    }).showToast()
+}
+//Funcion que muestra un cartel emergente indicando que no hay mas stock disponible
+function cartelNoHayMasStock(){
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No hay mas stock disponible!',
+    })
+}
 //Api de productos
 fetch (`https://63127002b466aa9b038a2690.mockapi.io/productos`)
 .then (respuesta => respuesta.json())
@@ -20,24 +42,23 @@ fetch (`https://63127002b466aa9b038a2690.mockapi.io/productos`)
         </div>
     `})
     //Eventos de los botones "Agregar al carrito"
-    data.forEach ((elemento) => {
+    data.forEach ((elemento,indice) => {
         const btnAgregar = document.getElementById (`btnAgregar${elemento.id}`)
         btnAgregar.addEventListener(`click`, () => {
-            carrito.push(elemento)//Empuja el producto seleccionado al array carrito
+            if (carrito.find(objeto => objeto.id == elemento.id)) {
+                if (carrito[elemento.id].agregados<carrito[elemento.id].stock){
+                    carrito[elemento.id].agregados++
+                    cartelAgregadoAlCarrito()
+                }
+                else {
+                    cartelNoHayMasStock()
+                }
+            } else {
+                carrito.push(elemento)//Empuja el producto seleccionado al array carrito
+                carrito[elemento.id].agregados++
+                cartelAgregadoAlCarrito()
+            }
             localStorage.setItem(`carrito`,JSON.stringify(carrito))//Actualiza el arreglo de productos en el local storage
-            //Notificacion emergente de producto agregado (toastify)
-            Toastify({
-                text: "Producto agregado",
-                duration: 3000,
-                close: true,
-                gravity: "bottom", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                style: {
-                    background: "linear-gradient(to right, black, gray)",
-                },
-                onClick: function(){} // Callback after click
-            }).showToast()
         })
     })
 })
