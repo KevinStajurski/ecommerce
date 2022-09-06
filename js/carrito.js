@@ -13,7 +13,6 @@ carrito.forEach((producto)=>{
           <p class="card-text">Marca: ${producto.marca}</p>
           <p class="card-text">Modelo: ${producto.modelo}</p>
           <p class="card-text">Precio: $ ${producto.precio}</p>
-          <p class="card-text">Cantidad: ${producto.agregados}</p>
         </div>
       </div>
     `
@@ -45,4 +44,3 @@ vaciarCarrito.addEventListener(`click`, () => {
 finalizarCompra.addEventListener(`click`, () => {
   Swal.fire('Gracias por su compra!')
 })
-console.log(carrito)
