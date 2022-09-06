@@ -42,20 +42,15 @@ fetch (`https://63127002b466aa9b038a2690.mockapi.io/productos`)
         </div>
     `})
     //Eventos de los botones "Agregar al carrito"
-    data.forEach ((elemento,indice) => {
+    data.forEach ((elemento) => {
         const btnAgregar = document.getElementById (`btnAgregar${elemento.id}`)
         btnAgregar.addEventListener(`click`, () => {
-            if (carrito.find(objeto => objeto.id == elemento.id)) {
-                if (carrito[elemento.id].agregados<carrito[elemento.id].stock){
-                    carrito[elemento.id].agregados++
-                    cartelAgregadoAlCarrito()
-                }
-                else {
-                    cartelNoHayMasStock()
-                }
+            let resultado = carrito.indexOf(elemento)
+            if (resultado == -1){
+                carrito.push(elemento)
+                cartelAgregadoAlCarrito()
             } else {
-                carrito.push(elemento)//Empuja el producto seleccionado al array carrito
-                carrito[elemento.id].agregados++
+                carrito[resultado].agregados++
                 cartelAgregadoAlCarrito()
             }
             localStorage.setItem(`carrito`,JSON.stringify(carrito))//Actualiza el arreglo de productos en el local storage
