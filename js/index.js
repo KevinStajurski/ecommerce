@@ -44,20 +44,24 @@ fetch (`https://63127002b466aa9b038a2690.mockapi.io/productos`)
     //Eventos de los botones "Agregar al carrito"
     data.forEach ((elemento) => {
         const btnAgregar = document.getElementById (`btnAgregar${elemento.id}`)
-        btnAgregar.addEventListener(`click`, () => {
-            carrito.push(elemento.id)
-            cartelAgregadoAlCarrito()
-            btnAgregar.disabled=true
-            btnAgregar.innerHTML = `Agregado`
-            localStorage.setItem(`carrito`,JSON.stringify(carrito))//Actualiza el arreglo de productos en el local storage
-        })
-        if (carrito.includes(elemento.id)){
-            btnAgregar.disabled=true
-            btnAgregar.innerHTML = `Agregado`
-        }
         if (elemento.stock==0){
             btnAgregar.disabled=true
             btnAgregar.innerHTML = `Sin stock`
         }
+        btnAgregar.addEventListener(`click`, () => {
+            if (carrito.includes(elemento)){
+                const indice = carrito.indexOf(elemento)
+                if (elemento.stock>carrito[indice].agregados){
+                    carrito[indice].agregados++
+                    cartelAgregadoAlCarrito()
+                } else {
+                    cartelNoHayMasStock()
+                }
+            } else {
+                carrito.push(elemento)
+                cartelAgregadoAlCarrito()
+            }
+            localStorage.setItem(`carrito`,JSON.stringify(carrito))//Actualiza el arreglo de productos en el local storage
+        })
     })
 })
