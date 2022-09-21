@@ -44,20 +44,21 @@ fetch (`https://63127002b466aa9b038a2690.mockapi.io/productos`)
     //Eventos de los botones "Agregar al carrito"
     data.forEach ((elemento) => {
         const btnAgregar = document.getElementById (`btnAgregar${elemento.id}`)
-        if (elemento.stock==0){
+        if (elemento.stock==0){//Si no hay stock desactiva el boton de agregar al carrito
             btnAgregar.disabled=true
             btnAgregar.innerHTML = `Sin stock`
         }
         btnAgregar.addEventListener(`click`, () => {
-            if (carrito.includes(elemento)){
-                const indice = carrito.indexOf(elemento)
-                if (elemento.stock>carrito[indice].agregados){
+            const ids = (element) => element.id == elemento.id//Función de prueba para findIndex que busca el elemento que cumpla con el id
+            const indice = carrito.findIndex(ids)//Guarda el indice del elemento que tenga el id buscado
+            if (indice >= 0) {//Si el indice es mayor o igual a 0 ya hay un producto de este tipo en el carrito
+                if (elemento.stock > carrito[indice].agregados) {//"agregados" es la cantidad del mismo producto en carrito
                     carrito[indice].agregados++
                     cartelAgregadoAlCarrito()
                 } else {
                     cartelNoHayMasStock()
                 }
-            } else {
+            } else {//Si entra acá es porque no habia un producto de este tipo em el carrito
                 carrito.push(elemento)
                 cartelAgregadoAlCarrito()
             }

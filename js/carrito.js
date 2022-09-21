@@ -1,4 +1,4 @@
-const carrito = JSON.parse(localStorage.getItem("carrito")) ?? []
+const carrito = JSON.parse(localStorage.getItem("carrito")) ?? []//Consulta del carrito en el local storage, si no existe lo crea vacio
 let total = 0
 //Muestra el carrito
 carrito.forEach ((producto) => {
@@ -15,7 +15,7 @@ carrito.forEach ((producto) => {
     </div>`
     total=total+producto.precio*producto.agregados
 })
-total==0 ? divCarrito.innerHTML = `Tu carrito se encuentra vacío.` : divCarrito.innerHTML += `<p>El total es: $ ${total}</p>`
+total==0 ? divCarrito.innerHTML = `Tu carrito se encuentra vacío.` : divCarrito.innerHTML += `<p>El total es: $ ${total}</p>`//Muestra el total del carrito o informa si esta vacio
 //Vaciar carrito
 const vaciarCarrito = document.getElementById("vaciarCarrito")
 vaciarCarrito.addEventListener(`click`, () => {
